@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: fintech_pulse
+    database: hive_metastore_pulse
+    schema: fintech_pulse
+    tables:
+      - name: layoffs_enriched
+        description: "Raw enriched layoffs table loaded from CSV"
+
+models:
+  - name: stg_layoffs
+    description: "Staged and lightly cleaned layoffs + stock price data"
+    columns:
+      - name: company_name
+        description: "Name of the company that announced layoffs"
+        tests:
+          - not_null
+      - name: announced_date
+        description: "Date the layoff was announced"
+        tests:
+          - not_null
+      - name: pct_change_30d
+        description: "Stock price % change from announcement day to 30 days later"

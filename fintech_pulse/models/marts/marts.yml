@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: layoff_stock_reactions
+    description: >
+      One row per layoff event (public companies only, complete stock data).
+      Each row shows what the market did in the 30 days after the announcement.
+
+  - name: industry_summary
+    description: >
+      Aggregated view of stock performance after layoffs, grouped by industry.
+
+  - name: yearly_trend
+    description: >
+      Year-by-year trend of layoff events and post-announcement stock returns,
+      with year-over-year deltas using the LAG() window function.

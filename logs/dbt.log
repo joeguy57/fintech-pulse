@@ -1,0 +1,51 @@
+[0m12:42:01.951846 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 12:42:01.997848 | 44b7da75-f1c2-4346-8288-dbd47a96581e ==============================
+[0m12:42:01.997848 [info ] [MainThread]: Running with dbt=1.11.11
+[0m12:42:01.997848 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\josep\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt init fintech_pulse', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m12:42:02.005848 [debug] [MainThread]: Starter project path: c:\Users\josep\OneDrive\Desktop\Projects\fintech-pulse\.venv\Lib\site-packages\dbt\include\starter_project
+[0m12:42:02.013498 [info ] [MainThread]: 
+Your new dbt project "fintech_pulse" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m12:42:02.014503 [info ] [MainThread]: Setting up your profile.
+[0m12:42:14.315201 [debug] [MainThread]: Spark adapter: Setting pyhive.hive logging to ERROR
+[0m12:42:14.316204 [debug] [MainThread]: Spark adapter: Setting thrift.transport logging to ERROR
+[0m12:42:14.316204 [debug] [MainThread]: Spark adapter: Setting thrift.protocol logging to ERROR
+[0m12:44:01.001496 [info ] [MainThread]: Profile fintech_pulse written to C:\Users\josep\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m12:44:01.002497 [debug] [MainThread]: Command `dbt init` succeeded at 12:44:01.002497 after 119.08 seconds
+[0m12:44:01.003494 [debug] [MainThread]: Flushing usage events
+[0m14:11:16.203119 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 14:11:16.252625 | 036a83f2-5099-4f2f-8c68-8d6ae44e4d40 ==============================
+[0m14:11:16.252625 [info ] [MainThread]: Running with dbt=1.11.11
+[0m14:11:16.252625 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\josep\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m14:11:16.261624 [info ] [MainThread]: dbt version: 1.11.11
+[0m14:11:16.261624 [info ] [MainThread]: python version: 3.12.0
+[0m14:11:16.261624 [info ] [MainThread]: python path: c:\Users\josep\OneDrive\Desktop\Projects\fintech-pulse\.venv\Scripts\python.exe
+[0m14:11:16.262625 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m14:11:16.780245 [debug] [MainThread]: Spark adapter: Setting pyhive.hive logging to ERROR
+[0m14:11:16.780245 [debug] [MainThread]: Spark adapter: Setting thrift.transport logging to ERROR
+[0m14:11:16.780245 [debug] [MainThread]: Spark adapter: Setting thrift.protocol logging to ERROR
+[0m14:11:17.146685 [info ] [MainThread]: Using profiles dir at C:\Users\josep\.dbt
+[0m14:11:17.147200 [info ] [MainThread]: Using profiles.yml file at C:\Users\josep\.dbt\profiles.yml
+[0m14:11:17.147715 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\josep\OneDrive\Desktop\Projects\fintech-pulse\dbt_project.yml
+[0m14:11:17.147715 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m14:11:17.148748 [debug] [MainThread]: Command `dbt debug` failed at 14:11:17.148748 after 0.98 seconds
+[0m14:11:17.148748 [debug] [MainThread]: Flushing usage events
