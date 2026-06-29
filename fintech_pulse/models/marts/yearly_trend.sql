@@ -20,10 +20,8 @@ SELECT
     pct_rewarded,
     -- How did this year compare to last year?
     ROUND(
-    avg_30d_return - LAG(avg_30d_return) OVER (ORDER BY year)
-    , 2) AS yoy_return_delta,
+    avg_30d_return - LAG(avg_30d_return) OVER (ORDER BY year), 2) AS yoy_return_delta,
     ROUND(
-    pct_rewarded - LAG(pct_rewarded) OVER (ORDER BY year)
-    , 1) AS yoy_pct_rewarded_delta
+    pct_rewarded - LAG(pct_rewarded) OVER (ORDER BY year), 1) AS yoy_pct_rewarded_delta
 FROM yearly
 ORDER BY year
