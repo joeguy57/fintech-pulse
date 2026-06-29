@@ -1,135 +1,95 @@
 # FintechPulse: Do Tech Layoffs Reward or Punish Companies on the Stock Market?
 
-An end-to-end data pipeline that answers a genuinely interesting question using real public data: **when a tech company announces mass layoffs, does its stock price go up or down in the 30 days that follow?**
+An end-to-end data pipeline built with Python, Databricks, dbt, and Spark SQL to answer one genuinely interesting question:
+
+> **When a tech company announces mass layoffs, does its stock price go up or down in the 30 days that follow?**
 
 ---
 
-## What I Found
+## The Answer: The Market Mostly Rewards Layoffs
 
-After enriching thousands of real layoff events with Yahoo Finance stock data and running them through a dbt pipeline on Databricks, the results were clear: **the market more often rewards layoffs than punishes them** — but the severity and industry both matter significantly.
+![Layoff Events vs Stock Market Reaction](docs/LE_V_SR.png)
 
-Key findings from the SQL analysis:
-- The majority of layoff announcements were followed by a stock price increase within 30 days
-- Larger workforce cuts (Severe 30%+) tended to produce stronger market reactions — both positive and negative
-- Fintech and cloud-infrastructure companies saw the most consistent positive reactions
-- The trend shifted notably year-over-year, with 2022–2023 being the peak of both layoffs and market reward
+**44.8% of layoff announcements triggered a Strong Reward (>+5%)** — the single most common outcome. Only 1 in 4 events resulted in a strong punishment. Companies announcing layoffs that cut the largest share of their workforce (~22% avg) also saw the strongest punishments, suggesting the market distinguishes between strategic restructuring and distress-driven cuts.
+
+---
+
+## Does the Size of the Cut Matter?
+
+![Avg 30-Day Return by Layoff Severity](docs/30_SR_LS.png)
+
+Yes — but not in the way you'd expect. **Minor cuts (<5%) produced the best average 30-day return at +6.4%**, and over 80% of those events were rewarded. The Major tier (15–30% cuts) was the only category to average a negative return at **-4.9%**, with less than 40% of events resulting in a stock gain. This suggests investors read large cuts as a distress signal rather than efficiency.
+
+---
+
+## Which Industries Benefit Most?
+
+![Avg 30-Day Stock Return by Industry](docs/30D_SR_INDUSTRY.png)
+
+Finance and Software Development companies saw the strongest average post-layoff returns at **+9.8% and +8.6%** respectively — the market appears to treat headcount reduction in these sectors as margin expansion. Fitness and Hardware companies were punished hardest (-8.6% and -6.3%), consistent with those industries facing structural demand problems, not just cost bloat.
+
+---
+
+## The Biggest Individual Winners
+
+![Top 10: 30-Day Return After Layoff](docs/RETURN_V_WF_CUT.png)
+
+**Coinbase (COIN) in January 2023** tops the list with a **+37.9% return** after cutting 20% of its workforce — the largest cut in the top 10. Uber's May 2020 announcement followed at +33.8%. Notably, several companies in the top 10 (META, NFLX, GOOGL) made relatively small workforce cuts but still saw 20%+ returns, reinforcing that cut size alone doesn't drive reward.
+
+---
+
+## Year-over-Year Trend
+
+![Yearly Layoff Events & Avg 30-Day Stock Return](docs/YEARLY_LAYOFF_V_30D_SR.png)
+
+Layoff volume peaked in **2024 with 31 events**, but the best average market reaction came in **2023 at ~+6.3%** — the year the market most consistently rewarded restructuring. 2022 was the worst year for post-layoff returns, averaging negative, coinciding with the broader tech selloff where macro pressure made it hard for any signal to cut through.
+
+---
+
+## Monthly Activity & Rolling Trend
+
+![Monthly Layoff Activity & Stock Market Reaction](docs/MONTHLY_LAYOFF_V_SM_REACTION.png)
+
+The 3-month rolling average (purple) stayed consistently above zero for most of the dataset, with dips in early 2022 and brief spikes around January 2024 (7 events — the busiest single month). The trend through 2024–2025 shows the rolling average stabilising around +5–10%, suggesting the market has become increasingly accustomed to treating layoffs as a positive signal.
 
 ---
 
 ## Stack
 
-| Layer | Tool | Why |
-|---|---|---|
-| Data cleaning | Python (pandas, numpy) | Handles messy real-world CSVs |
-| Stock prices | yfinance | Free Yahoo Finance API, no key needed |
-| Cloud platform | Databricks Community Edition | Free Delta Lake + SQL Warehouse |
-| Transformations | dbt (dbt-databricks) | Modular, tested, documented SQL |
-| Analysis | Spark SQL | Window functions, aggregations |
-| Visualizations | matplotlib | Charts produced in Databricks notebook |
+| Layer | Tool |
+|---|---|
+| Data cleaning | Python (pandas, numpy) |
+| Stock prices | yfinance (free, no API key) |
+| Cloud platform | Databricks Community Edition |
+| Transformations | dbt (dbt-databricks) |
+| Analysis | Spark SQL |
+| Visualisations | matplotlib |
 
 ---
 
-## Project Structure
-
-```
-fintech-pulse/
-├── data/
-│   ├── layoffs_raw.csv          # Downloaded from Kaggle
-│   ├── layoffs_clean.csv        # After 01_clean.py
-│   └── layoffs_enriched.csv     # After 02_enrich.py (stock prices added)
-├── python/
-│   ├── 01_clean.py              # Cleans raw layoffs data
-│   └── 02_enrich.py             # Adds 30-day stock price data
-├── fintech_pulse/               # dbt project
-│   ├── dbt_project.yml
-│   └── models/
-│       ├── staging/
-│       │   ├── stg_layoffs.sql
-│       │   └── stg_layoffs.yml
-│       └── marts/
-│           ├── layoff_stock_reactions.sql
-│           ├── industry_summary.sql
-│           ├── yearly_trend.sql
-│           └── marts.yml
-├── sql/
-│   └── analysis/
-│       ├── headline_answer.sql
-│       ├── severity_breakdown.sql
-│       ├── industry_breakdown.sql
-│       ├── yearly_trend.sql
-│       ├── top10_gainers.sql
-│       └── rolling_3m_avg.sql
-├── notebooks/
-│   └── layoff_stock_analysis.ipynb   # Databricks notebook with charts
-└── README.md
-```
-
----
-
-## How to Run It
-
-### 1. Prerequisites
-
-- Python 3.11+
-- A free [Databricks Community Edition](https://community.cloud.databricks.com) account
-- A free [Kaggle](https://www.kaggle.com) account
-
-### 2. Set up your environment
+## How to Run
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/fintech-pulse.git
+git clone https://github.com/joeguy57/fintech-pulse.git
 cd fintech-pulse
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+python -m venv venv && source venv/bin/activate
 pip install pandas numpy yfinance dbt-databricks
+
+python python/01_clean.py       # clean raw data
+python python/02_enrich.py      # add stock prices (takes a few mins)
 ```
 
-### 3. Get the data
-
-Download `tech_layoffs.csv` from [Kaggle](https://www.kaggle.com/datasets/ulrikeherold/tech-layoffs-2020-2024), rename it to `layoffs_raw.csv`, and place it in the `data/` folder.
-
-### 4. Clean and enrich
-
-```bash
-python python/01_clean.py       # produces data/layoffs_clean.csv
-python python/02_enrich.py      # produces data/layoffs_enriched.csv (takes a few minutes)
-```
-
-### 5. Load into Databricks
-
-Upload both CSVs via the Databricks SQL Editor → Create Table:
-
-- Catalog: `hive_metastore`
-- Database: `fintech_pulse`
-- Tables: `layoffs_clean`, `layoffs_enriched`
-
-### 6. Run dbt
+Upload the two CSVs to Databricks (`hive_metastore.fintech_pulse`), then:
 
 ```bash
 cd fintech_pulse
-dbt debug       # confirm connection is green
-dbt run         # builds all 4 models
-dbt test        # runs data quality checks
+dbt run && dbt test
 ```
 
-### 7. Explore in the notebook
-
-Import `notebooks/layoff_stock_analysis.ipynb` into your Databricks workspace to run all 6 analysis queries and view the charts.
-
----
-
-## dbt Models
-
-```
-stg_layoffs              (view)   — cleans & casts types from raw source
-    └── layoff_stock_reactions   (table)  — one row per event, market reaction labels
-            ├── industry_summary (table)  — aggregated returns by sector
-            └── yearly_trend     (table)  — YoY deltas using LAG() window function
-```
 
 ---
 
 ## Data Sources
 
-- **Layoffs data:** [Tech layoffs 2020–2025 by Ulrike Herold](https://www.kaggle.com/datasets/ulrikeherold/tech-layoffs-2020-2024) — licensed under ODbL
-- **Stock prices:** Yahoo Finance via `yfinance` (free, no API key required)
+- **Layoffs:** [Tech layoffs 2020–2025 by Ulrike Herold](https://www.kaggle.com/datasets/ulrikeherold/tech-layoffs-2020-2024) — ODbL licence
+- **Stock prices:** Yahoo Finance via `yfinance`
